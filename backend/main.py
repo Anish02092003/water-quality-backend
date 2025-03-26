@@ -33,6 +33,8 @@ def predict_water_quality(data: WaterQualityInput):
         "Heavy Metal Concentration": f"{pred_metal:.4f} mg/L",
         "Bacterial Contamination": "Contaminated" if pred_bacteria == 1 else "Safe"
     }
-    @app.get("/")
+   app = FastAPI()
+
+@app.get("/")
 def home():
-    return {"message": "Smart Water Quality API is running!"}
+    return {"message": "API is running!"}  # ✅ Correct indentation
