@@ -35,6 +35,6 @@ def predict_water_quality(data: WaterQualityInput):
     }
 app = FastAPI()
 
-@app.get("/")
+@app.get("/", methods=["GET", "HEAD"])
 def home():
     return {"message": "API is running!"}  # ✅ Correct indentation
