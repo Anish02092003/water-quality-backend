@@ -19,6 +19,14 @@ class WaterQualityInput(BaseModel):
     tds: float
     turbidity: float
 
+@app.get("/")
+def home():
+    return {"message": "API is running!"}  # ✅ Correct indentation
+
+@app.head("/")
+def head():
+    return {}  # No response body, just headers
+
 @app.post("/predict")
 def predict_water_quality(data: WaterQualityInput):
     input_data = np.array([[data.temperature, data.ph, data.tds, data.turbidity]])
@@ -34,11 +42,3 @@ def predict_water_quality(data: WaterQualityInput):
         "Bacterial Contamination": "Contaminated" if pred_bacteria == 1 else "Safe"
     }
 app = FastAPI()
-
-@app.get("/")
-def home():
-    return {"message": "API is running!"}  # ✅ Correct indentation
-
-@app.head("/")
-def head():
-    return {}  # No response body, just headers
