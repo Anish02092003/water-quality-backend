@@ -20,7 +20,7 @@ class WaterQualityInput(BaseModel):
     turbidity: float
 
 @app.get("/")
-def home():
+async def root():
     return {"message": "API is running!"}  # ✅ Correct indentation
 
 
