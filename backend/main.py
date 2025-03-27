@@ -35,6 +35,13 @@ def predict_water_quality(data: WaterQualityInput):
     }
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 @app.head("/")
 def head():
     return {}  # No response body, just headers
