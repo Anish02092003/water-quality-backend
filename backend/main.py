@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import joblib
 import numpy as np
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load trained ML models
 bacteria_model = joblib.load("models/bacteria_model.pkl")
