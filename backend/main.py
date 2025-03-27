@@ -23,9 +23,6 @@ class WaterQualityInput(BaseModel):
 def home():
     return {"message": "API is running!"}  # ✅ Correct indentation
 
-@app.head("/")
-def head():
-    return {}  # No response body, just headers
 
 @app.post("/predict")
 def predict_water_quality(data: WaterQualityInput):
@@ -42,3 +39,7 @@ def predict_water_quality(data: WaterQualityInput):
         "Bacterial Contamination": "Contaminated" if pred_bacteria == 1 else "Safe"
     }
 app = FastAPI()
+
+@app.head("/")
+def head():
+    return {}  # No response body, just headers
