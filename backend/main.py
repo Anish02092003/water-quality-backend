@@ -19,11 +19,6 @@ class WaterQualityInput(BaseModel):
     tds: float
     turbidity: float
 
-@app.get("/")
-async def root():
-    return {"message": "API is running!"}  # ✅ Correct indentation
-
-
 @app.post("/predict")
 def predict_water_quality(data: WaterQualityInput):
     input_data = np.array([[data.temperature, data.ph, data.tds, data.turbidity]])
