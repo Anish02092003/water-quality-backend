@@ -38,3 +38,7 @@ app = FastAPI()
 @app.get("/")
 def home():
     return {"message": "API is running!"}  # ✅ Correct indentation
+
+@app.head("/")
+def head():
+    return {}  # No response body, just headers
