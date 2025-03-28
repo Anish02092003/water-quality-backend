@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import joblib
 import numpy as np
+import os
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -35,7 +36,9 @@ def predict_water_quality(data: WaterQualityInput):
         "Bacterial Contamination": "Contaminated" if pred_bacteria == 1 else "Safe"
     }
 app = FastAPI()
-
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 10000)))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  
@@ -49,3 +52,4 @@ def head():
 @app.get("/")
 def home():
     return {}
+    if __name__ == "__main__":
