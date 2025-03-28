@@ -21,7 +21,7 @@ class WaterQualityInput(BaseModel):
     tds: float
     turbidity: float
 
-@app.post("/predict")
+@app.post("/predict")  # ✅ Ensure it’s a POST route
 def predict_water_quality(data: WaterQualityInput):
     input_data = np.array([[data.temperature, data.ph, data.tds, data.turbidity]])
     input_scaled = scaler.transform(input_data)
