@@ -52,4 +52,3 @@ def head():
 @app.get("/")
 def home():
     return {}
-    if __name__ == "__main__":
