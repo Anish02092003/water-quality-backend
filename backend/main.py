@@ -21,20 +21,6 @@ class WaterQualityInput(BaseModel):
     tds: float
     turbidity: float
 
-@app.post("/predict")  # ✅ Ensure it’s a POST route
-def predict_water_quality(data: WaterQualityInput):
-    input_data = np.array([[data.temperature, data.ph, data.tds, data.turbidity]])
-    input_scaled = scaler.transform(input_data)
-
-    pred_do = do_model.predict(input_scaled)[0]
-    pred_metal = metal_model.predict(input_scaled)[0]
-    pred_bacteria = bacteria_model.predict(input_scaled)[0]
-
-    return {
-        "Dissolved Oxygen (DO)": f"{pred_do:.2f} mg/L",
-        "Heavy Metal Concentration": f"{pred_metal:.4f} mg/L",
-        "Bacterial Contamination": "Contaminated" if pred_bacteria == 1 else "Safe"
-    }
 app = FastAPI()
 if __name__ == "__main__":
     import uvicorn
@@ -52,3 +38,18 @@ def head():
 @app.get("/")
 def home():
     return {}
+
+@app.post("/predict")  # ✅ Ensure it’s a POST route
+def predict_water_quality(data: WaterQualityInput):
+    input_data = np.array([[data.temperature, data.ph, data.tds, data.turbidity]])
+    input_scaled = scaler.transform(input_data)
+
+    pred_do = do_model.predict(input_scaled)[0]
+    pred_metal = metal_model.predict(input_scaled)[0]
+    pred_bacteria = bacteria_model.predict(input_scaled)[0]
+
+    return {
+        "Dissolved Oxygen (DO)": f"{pred_do:.2f} mg/L",
+        "Heavy Metal Concentration": f"{pred_metal:.4f} mg/L",
+        "Bacterial Contamination": "Contaminated" if pred_bacteria == 1 else "Safe"
+    }
