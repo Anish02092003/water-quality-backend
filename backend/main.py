@@ -40,7 +40,7 @@ def home():
     return {}
 
 @app.post("/predict")  # ✅ Ensure it’s a POST route
-async def predict_water_quality(data: WaterQualityInput):
+def predict_water_quality(data: WaterQualityInput):
     input_data = np.array([[data.temperature, data.ph, data.tds, data.turbidity]])
     input_scaled = scaler.transform(input_data)
 
