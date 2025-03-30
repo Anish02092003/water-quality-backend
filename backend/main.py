@@ -33,7 +33,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 @app.head("/")
-def head():
+async def head():
     return {}  # No response body, just headers
 @app.get("/")
 def home():
