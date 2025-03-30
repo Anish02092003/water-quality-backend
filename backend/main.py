@@ -64,7 +64,7 @@ def predict_water_quality(data: WaterQualityInput):
     }
     # Function to send data to Blynk
 def send_to_blynk(bacteria, do, metal):
-    url = f"https://blynk.cloud/external/api/update?token={BLYNK_AUTH_TOKEN}"
+    url = f"https://blynk.cloud/external/api/update?token={JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6}"
     data = {
         "V1": bacteria,  # Virtual Pin V1
         "V2": do,  # Virtual Pin V2
