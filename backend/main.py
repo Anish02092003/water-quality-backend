@@ -1,10 +1,10 @@
+import requests
 from fastapi import FastAPI
 import joblib
 import numpy as np
 import os
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-import requests
 
 # Load trained ML models
 bacteria_model = joblib.load("models/bacteria_model.pkl")
@@ -15,9 +15,8 @@ scaler = joblib.load("models/scaler.pkl")
 # Initialize FastAPI
 app = FastAPI(title="Water Quality Prediction API")
 
-BLYNK_TEMPLATE_ID = "TMPL3CBl1q_KY"
-BLYNK_TEMPLATE_NAME = "Water Quality Control System"
 BLYNK_AUTH_TOKEN = "JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6"
+BLYNK_URL = f"https://blynk.cloud/external/api/update?token={JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6}"
 
 # Define Input Schema
 class WaterQualityInput(BaseModel):
@@ -54,7 +53,7 @@ def predict_water_quality(data: WaterQualityInput):
     pred_bacteria = bacteria_model.predict(input_scaled)[0]
 
      # Send predicted values to Blynk
-    send_to_blynk(bacteria_prediction, do_prediction, metal_prediction)
+    send_to_blynk(do_prediction, metal_prediction, bacteria_prediction)
 
 
     return {
