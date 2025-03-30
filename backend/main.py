@@ -3,6 +3,7 @@ from fastapi import FastAPI
 import joblib
 import numpy as np
 import os
+from dotenv import load_dotenv
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -15,7 +16,8 @@ scaler = joblib.load("models/scaler.pkl")
 # Initialize FastAPI
 app = FastAPI(title="Water Quality Prediction API")
 
-BLYNK_AUTH_TOKEN = "JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6"
+load_dotenv()
+BLYNK_AUTH_TOKEN = os.getenv("JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6")
 BLYNK_URL = f"https://blynk.cloud/external/api/update?token={JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6}"
 
 # Define Input Schema
