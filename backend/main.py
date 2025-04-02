@@ -9,8 +9,9 @@ from pydantic import BaseModel
 
 # ✅ Load environment variables
 load_dotenv()
-BLYNK_AUTH_TOKEN = os.getenv("BLYNK_AUTH_TOKEN")
-BLYNK_URL = f"https://blynk.cloud/external/api/"
+BLYNK_AUTH_TOKEN = os.getenv("JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6")
+BLYNK_URL = https://blynk.cloud/external/api?token=JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6
+
 
 # ✅ Load trained ML models
 bacteria_model = joblib.load("models/bacteria_model.pkl")
@@ -91,5 +92,5 @@ def predict_water_quality():
 # ✅ Start Server
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 10000)))
 
