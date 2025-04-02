@@ -10,7 +10,7 @@ from pydantic import BaseModel
 # ✅ Load environment variables
 load_dotenv()
 BLYNK_AUTH_TOKEN = os.getenv("JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6")
-BLYNK_URL = https://blynk.cloud/external/api?token=JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6
+BLYNK_URL = "https://blynk.cloud/external/api?token=JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6"
 
 
 # ✅ Load trained ML models
