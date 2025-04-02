@@ -62,6 +62,13 @@ def send_to_blynk(bacteria, do, metal):
     }
     requests.get(f"{BLYNK_URL}update?token={BLYNK_AUTH_TOKEN}", params=payload)
 
+@app.head("/")
+def head():
+    return {}  # No response body, just headers
+@app.get("/")
+def home():
+    return {}
+
 # ✅ API Endpoint for Predictions
 @app.get("/predict")
 def predict_water_quality():
