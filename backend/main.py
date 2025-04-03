@@ -40,7 +40,7 @@ class WaterQualityInput(BaseModel):
 # ✅ Function to Get Real-Time Sensor Data from Blynk (Fixed)
 def get_sensor_data():
     try:
-        response = requests.get(f"{BLYNK_URL}/get?token={BLYNK_AUTH_TOKEN}&V1&V2&V3&V4")
+        response = requests.get(f"{BLYNK_URL}/get/V1,V2,V3,V4?token={BLYNK_AUTH_TOKEN}")
         if response.status_code == 200:
             data = response.json()
             if len(data) >= 4:  # Ensure we have all required sensor readings
