@@ -9,9 +9,8 @@ from pydantic import BaseModel
 
 # ✅ Load environment variables
 load_dotenv()
-BLYNK_AUTH_TOKEN = os.getenv("BLYNK_AUTH_TOKEN")
-BLYNK_URL = "https://blynk.cloud/external/api?token=JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6"
-
+BLYNK_AUTH_TOKEN = os.getenv("BLYNK_AUTH_TOKEN", "JyZsPsdPWqRMFeG9q90YK5DOlNU5dXp6")  # Use .env value or fallback
+BLYNK_URL = f"https://blynk.cloud/external/api"
 
 # ✅ Load trained ML models
 bacteria_model = joblib.load("models/bacteria_model.pkl")
@@ -38,36 +37,38 @@ class WaterQualityInput(BaseModel):
     tds: float
     turbidity: float
 
-# ✅ Function to Get Real-Time Sensor Data from Blynk
+# ✅ Function to Get Real-Time Sensor Data from Blynk (Fixed)
 def get_sensor_data():
     try:
-        response = requests.get(f"{BLYNK_URL}get?token={BLYNK_AUTH_TOKEN}&V1&V2&V3&V4")
-        data = response.json()
-        return {
-            "temperature": float(data[0]),  
-            "ph": float(data[1]),
-            "tds": float(data[2]),
-            "turbidity": float(data[3]),
-        }
+        response = requests.get(f"{BLYNK_URL}/get?token={BLYNK_AUTH_TOKEN}&V1&V2&V3&V4")
+        if response.status_code == 200:
+            data = response.json()
+            if len(data) >= 4:  # Ensure we have all required sensor readings
+                return {
+                    "temperature": float(data[0]),  
+                    "ph": float(data[1]),
+                    "tds": float(data[2]),
+                    "turbidity": float(data[3]),
+                }
+        print(f"Error: Invalid response from Blynk: {response.text}")
     except Exception as e:
         print(f"Error fetching data from Blynk: {e}")
-        return None
+    return None
 
-# ✅ Function to Send Predictions to Blynk
+# ✅ Function to Send Predictions to Blynk (Fixed)
 def send_to_blynk(bacteria, do, metal):
-    payload = {
-        "V5": do,  # Display DO on Blynk Virtual Pin V5
-        "V6": metal,  # Display Metal Concentration on V6
-        "V7": bacteria,  # Display Bacterial Contamination on V7
-    }
-    requests.get(f"{BLYNK_URL}update?token={BLYNK_AUTH_TOKEN}", params=payload)
+    try:
+        requests.get(f"{BLYNK_URL}/update?token={BLYNK_AUTH_TOKEN}&V5={do}&V6={metal}&V7={bacteria}")
+    except Exception as e:
+        print(f"Error sending data to Blynk: {e}")
 
 @app.head("/")
 def head():
     return {}  # No response body, just headers
+
 @app.get("/")
 def home():
-    return {}
+    return {"message": "Water Quality API is running"}
 
 # ✅ API Endpoint for Predictions
 @app.get("/predict")
@@ -100,4 +101,3 @@ def predict_water_quality():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 10000)))
-
