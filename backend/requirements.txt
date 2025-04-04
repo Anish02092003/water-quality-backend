@@ -6,3 +6,4 @@ pydantic
 scikit-learn
 requests
 python-dotenv
+pandas
